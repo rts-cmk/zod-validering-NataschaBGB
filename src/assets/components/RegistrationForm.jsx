@@ -44,6 +44,7 @@ export default function RegistrationForm() {
         else {
             // convert Zod error to readable format
             const readableErrors = z.treeifyError(result.error);
+            
             // log readable errors to console
             console.log("Validation failed:", readableErrors.properties);
             // update state with readable errors
@@ -62,6 +63,7 @@ export default function RegistrationForm() {
                 onClose={() => setSuccessData(null)}
             />
 
+            {/* Registration Form */}
             <form onSubmit={submitHandler} className="registration__form">
                 
                 {/* First Name */}

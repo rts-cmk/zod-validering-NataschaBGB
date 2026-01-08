@@ -3,10 +3,30 @@ import z from "zod";
 
 const registrationSchema = z.object({
     
-    firstName: z.string().nonempty("First name is required"),
-    lastName: z.string().nonempty("Last name is required"),
+    firstName: z.string().nonempty("First name is required")
+        .regex(/^[a-zA-ZæøåÆØÅ]+$/, "First name can only contain letters"),
+    lastName: z.string().nonempty("Last name is required")
+        .regex(/^[a-zA-ZæøåÆØÅ]+$/, "Last name can only contain letters"),
     // coerce.date() to convert string input to Date object
-    birthdate: z.coerce.date()
+    birthdate: z.string()
+        // checks if the user has entered anything at all
+        // if the field is empty, show the error message:
+        .min(1, { message: "Birthdate is required" })
+
+        // user input comes as text (string) (e.g. "2002-02-02")
+        // convert the text to a real date
+        .transform((value) => new Date(value))
+
+        // checks if the date is valid - not NaN, a non-date or the date string is not properly formatted
+        // if invalid, show error message
+        .refine((date) => !isNaN(date.getTime()), {
+            message: "Invalid date",
+        })
+        // checks that the birthdate is not in the future
+        //      i.e., the date must be today or earlier
+        .refine((date) => date <= new Date(), {
+            message: "Birthdate cannot be in the future",
+        })
         // custom validation to check if user is at least 18 years old
         .refine((date) => {
             // date now
