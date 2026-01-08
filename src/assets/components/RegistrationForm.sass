@@ -1,0 +1,58 @@
+
+.registration
+    position: relative
+
+    // MARK: Form
+    &__form
+        border: 1px solid #ccc
+        border-radius: 8px
+        padding: 2rem
+        display: flex
+        flex-direction: column
+        gap: .5rem
+
+    // MARK: Label
+    &__label
+        display: flex
+        flex-direction: column
+        gap: .5rem
+
+    // MARK: Span/Text
+    &__text
+        font-weight: bold
+        font-size: 20px
+
+    // MARK: Input
+    &__input
+        padding: .5rem
+        border: 1px solid #ccc
+        border-radius: 4px
+        font-size: 18px
+        &--textarea
+            height: 100px
+            resize: vertical
+        
+
+    // MARK: Error List
+    &__error-list
+        margin: 0
+        padding: 0
+        list-style-type: "X "
+        list-style-position: inside
+        color: red
+        font-size: 16px
+        ::marker
+            font-weight: bold
+
+    // MARK: Register Button
+    &__register
+        margin-top: 1rem
+        padding: .5rem
+        font-size: 20px
+        border: none
+        border-radius: 4px
+        background-color: #005dc0b2
+        color: #ffffff
+        cursor: pointer
+        &:hover
+            background-color: #005dc0ce
