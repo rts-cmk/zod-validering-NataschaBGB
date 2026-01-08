@@ -45,6 +45,7 @@ const registrationSchema = z.object({
         }),
     email: z.email("Invalid email address"),
     username: z.string()
+        .nonempty("Username is required")
         .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"),
     profileDescription: z.string().max(200, "Profile description must be at most 200 characters long"),
     password: z.string().min(8, "Password must be at least 8 characters long")
