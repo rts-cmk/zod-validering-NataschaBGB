@@ -2,16 +2,23 @@ import './RegistrationForm.sass'
 import z from 'zod';
 import { useState } from 'react';
 import registrationSchema from '../../schemas/registrationSchema';
+import RegistrationSuccess from './RegistrationSuccess';
 
 
 
 export default function RegistrationForm() {
-    
+
+    // errors is undefined when no errors
+    // setErrors to update errors state
     const [errors, setErrors] = useState();
 
+    // successData is null when no success message is shown
+    // setSuccessData to update successData state
     const [successData, setSuccessData] = useState(null);
   
+    // form submit handler
     const submitHandler = (event) => {
+        // prevent default form submission
         event.preventDefault();
 
         // gather form data
@@ -28,8 +35,6 @@ export default function RegistrationForm() {
             setErrors(null);
             // show success message
             setSuccessData(result.data);
-            // show success section
-            document.querySelector('.registration__success-message').style.display = 'block';
             // clear form
             event.target.reset();
             // log success data to console
@@ -49,49 +54,17 @@ export default function RegistrationForm() {
     
     return (
         <section className="registration">
-            
-            <section className="registration__success-message">
-                
-                <h2>Thank you for registering!</h2>
 
-                <p className='registration__note'>Your account has been created with the following details:</p>
-
-                <div className='registration__success-data'>
-                    <h3>First Name:</h3>
-                    {successData && (
-                        <p>{successData.firstName}</p>
-                    )}
-                    <h3>Last Name:</h3>
-                    {successData && (
-                        <p>{successData.lastName}</p>
-                    )}
-                    <h3>Birthdate <span>(DD/MM/YYYY)</span>:</h3>
-                    {successData && (
-                        <p>{new Date(successData.birthdate).toLocaleDateString("en-GB")}</p>
-                    )}
-                    <h3>Email:</h3>
-                    {successData && (
-                        <p>{successData.email}</p>
-                    )}
-                    <h3>Username:</h3>
-                    {successData && (
-                        <p>{successData.username}</p>
-                    )}
-                    <h3>Profile Description:</h3>
-                    {successData && (
-                        <p>{successData.profileDescription}</p>
-                    )}
-                </div>
-
-                <button className='registration__success-ok' onClick={() =>
-                    { document.querySelector('.registration__success-message').style.display = 'none'; 
-                    // setSuccessData(null);
-                }}>OK</button>
-                <p className='registration__note'><strong>Note:</strong> For security reasons, your password is not displayed.</p>
-            </section>
+            {/* Form sent - Success Message */}
+            <RegistrationSuccess
+                data={successData}
+                // when OK button is clicked, update successData to null to close message (because component does not show if no data)
+                onClose={() => setSuccessData(null)}
+            />
 
             <form onSubmit={submitHandler} className="registration__form">
                 
+                {/* First Name */}
                 <label className="registration__label">
                     <span className="registration__text">First Name</span>
                     <input type="text" name='firstName' className="registration__input" autoComplete="given-name" />
@@ -102,6 +75,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
                 
+                {/* Last Name */}
                 <label className="registration__label">
                     <span className="registration__text">Last Name</span>
                     <input type="text" name="lastName" className="registration__input" autoComplete="family-name" />
@@ -112,6 +86,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
 
+                {/* Birthdate */}
                 <label className="registration__label">
                     <span className="registration__text">Birthdate</span>
                     <input type="date" name='birthdate' className="registration__input" autoComplete='bday' />
@@ -122,6 +97,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
 
+                {/* Email */}
                 <label className="registration__label">
                     <span className="registration__text">Email</span>
                     <input type="email" name='email' className="registration__input" autoComplete='email' />
@@ -132,6 +108,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
                 
+                {/* Username */}
                 <label className="registration__label">
                     <span className="registration__text">Username</span>
                     <input type="text" name='username' className="registration__input" />
@@ -142,6 +119,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
 
+                {/* Profile Description */}
                 <label className="registration__label">
                     <span className="registration__text">Profile Description</span>
                     <textarea name='profileDescription' 
@@ -153,6 +131,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
                 
+                {/* Password */}
                 <label className="registration__label">
                     <span className="registration__text">Password</span>
                     <input type="password" name='password' 
@@ -164,6 +143,7 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
 
+                {/* Confirm Password */}
                 <label className="registration__label">
                     <span className="registration__text">Confirm Password</span>
                     <input type="password" name='confirmPassword'  className="registration__input" autoComplete='new-password' />
@@ -174,7 +154,8 @@ export default function RegistrationForm() {
                     </ul>
                 </label>
                 
-                <button className="registration__submit" type="submit">Register</button>
+                {/* Register User */}
+                <button className="registration__register" type="submit">Register</button>
             </form>
         </section>
     )
