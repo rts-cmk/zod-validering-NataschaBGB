@@ -5,7 +5,6 @@ export default function App() {
 
   return (
     <main className="zod">
-      <h1>Zod Validation</h1>
       <RegistrationForm />
     </main>
   )
