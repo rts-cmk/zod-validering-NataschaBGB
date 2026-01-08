@@ -134,7 +134,7 @@ export default function RegistrationForm() {
                 
                 <label className="registration__label">
                     <span className="registration__text">Username</span>
-                    <input type="text" name='username' className="registration__input" autoComplete="username" />
+                    <input type="text" name='username' className="registration__input" />
                     <ul className='registration__error-list'>
                         {errors?.username?.errors?.map((error, index) => (
                             <li key={index} className="registration__error-item">{error}</li>
